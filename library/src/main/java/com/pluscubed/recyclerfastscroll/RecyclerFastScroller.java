@@ -43,6 +43,8 @@ public class RecyclerFastScroller extends FrameLayout {
     private boolean mAnimatingIn;
     private int mBarInset;
 
+    private int mMaxScrollHandleHeight = -1;
+
     public RecyclerFastScroller(Context context) {
         this(context, null, 0);
     }
@@ -333,6 +335,10 @@ public class RecyclerFastScroller extends FrameLayout {
         float ratio = (float) scrollOffset / (verticalScrollRange - barHeight);
 
         int calculatedHandleHeight = (int) ((float) barHeight / verticalScrollRange * barHeight);
+        
+        if (mMaxScrollHandleHeight > 0) {
+            calculatedHandleHeight = calculatedHandleHeight > mMaxScrollHandleHeight ? mMaxScrollHandleHeight : calculatedHandleHeight;
+        }
         if (calculatedHandleHeight < mMinScrollHandleHeight) {
             calculatedHandleHeight = mMinScrollHandleHeight;
         }
